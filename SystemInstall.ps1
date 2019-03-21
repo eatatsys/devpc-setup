@@ -1,5 +1,6 @@
 # enable hyper-v
 Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All -NoRestart
+Set-VMHost -VirtualMachinePath 'd:\VirtualMachines'
 
 # install choco and packages
 function Setup {
