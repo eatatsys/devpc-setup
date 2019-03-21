@@ -1,5 +1,5 @@
 Param(
-    [Boolean] $restart = $false
+    [Switch] $restart
 )
 
 # enable hyper-v
