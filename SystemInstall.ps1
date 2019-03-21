@@ -19,7 +19,7 @@ function Setup {
 }
 
 function InstallChoco() {
-    Set-ExecutionPolicy Bypass -Force -Scope Process; Invoke-WebRequest https://chocolatey.org/install.ps1 -UseBasicParsing | Invoke-Expression
+    Invoke-WebRequest https://chocolatey.org/install.ps1 -UseBasicParsing | Invoke-Expression
 }
 
 function ExecChoco($cmd) {
