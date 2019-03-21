@@ -1,3 +1,7 @@
+Param(
+    [Boolean] $restart = $false
+)
+
 # enable hyper-v
 Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All -NoRestart
 Set-VMHost -VirtualMachinePath 'd:\VirtualMachines'
@@ -34,4 +38,6 @@ ExecChoco -cmd "upgrade chocolatey"
 ExecChoco -cmd "install packages.config --accept-license --confirm --reduce-package-size"
 ExecChoco -cmd "feature disable -n=allowGlobalConfirmation"
 
-Restart-Computer
+if($restart) {
+    Restart-Computer
+}
