@@ -22,7 +22,7 @@ function Setup {
             }
         }
     }
-    $url = "https://raw.githubusercontent.com/chrisb-de/scripts/master/packages.config"
+    $url = "https://raw.githubusercontent.com/eatatsys/devpc-setup/master/packages.config"
     $output = "$PSScriptRoot\packages.config"
     Invoke-WebRequest -Uri $url -OutFile $output
 }
