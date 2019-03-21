@@ -3,7 +3,12 @@ Param(
 )
 
 # enable hyper-v
-Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All -NoRestart
+
+$hyperv = Get-WindowsOptionalFeature -FeatureName Microsoft-Hyper-V-All -Online
+if($hyperv.State -ne "Enabled") {
+    Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All -NoRestart
+}
+
 Set-VMHost -VirtualMachinePath 'd:\VirtualMachines'
 
 # install choco and packages
