@@ -3,7 +3,8 @@ Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All -NoRes
 Set-VMHost -VirtualMachinePath 'd:\VirtualMachines'
 
 # install choco and packages
-Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
 choco feature enable -n=allowGlobalConfirmation
 choco install packages.config -y
 choco feature disable -n=allowGlobalConfirmation
