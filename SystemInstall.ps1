@@ -9,7 +9,7 @@ if($hyperv.State -ne "Enabled") {
     Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All -NoRestart
 }
 
-Set-VMHost -VirtualMachinePath 'd:\VirtualMachines'
+Set-VMHost -VirtualHardDiskPath 'D:\VirtualMachines\VHD' -VirtualMachinePath 'D:\VirtualMachines'
 
 # install choco and packages
 function Setup {
