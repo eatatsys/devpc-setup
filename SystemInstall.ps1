@@ -37,7 +37,7 @@ function SetupChocoUpdateTask {
         $action = New-ScheduledTaskAction -Execute 'Powershell.exe' `
         -Argument '-NoProfile -WindowStyle Hidden -command "choco upgrade all --accept-license --confirm --reduce-package-size *> C:\temp\update_choco_all.log"'
         $trigger =  New-ScheduledTaskTrigger -At 1am -Weekly -DaysOfWeek Saturday
-        $settings = New-ScheduledTaskSettingsSet -ExecutionTimeLimit (New-TimeSpan -Minutes 2) -RestartCount 3 -RestartInterval (New-TimeSpan -Minutes 1)
+        $settings = New-ScheduledTaskSettingsSet -ExecutionTimeLimit (New-TimeSpan -Minutes 60) -RestartCount 3 -RestartInterval (New-TimeSpan -Minutes 1)
         Register-ScheduledTask -Action $action -Trigger $trigger -TaskName $taskname -Description $taskdescription -Settings $settings -User "System" -RunLevel Highest
     }
 }
