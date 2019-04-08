@@ -22,8 +22,10 @@ function Setup {
             }
         }
     }
+    $tempDir = "C:\temp"
+    Set-Location $tempDir
     $url = "https://raw.githubusercontent.com/eatatsys/devpc-setup/master/packages.config"
-    $output = "$PSScriptRoot\packages.config"
+    $output = "$tempDir\packages.config"
     Invoke-WebRequest -Uri $url -OutFile $output
 }
 
