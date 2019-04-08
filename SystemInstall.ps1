@@ -29,6 +29,19 @@ function Setup {
     Invoke-WebRequest -Uri $url -OutFile $output
 }
 
+function SetupChocoUpdateTask {
+    $taskname = "Update all Chocolatey Packages"
+    $task = (Get-ScheduledTaskInfo -TaskName $taskname -ErrorAction SilentlyContinue)
+    if ($null -eq $task) {
+        $taskdescription = "updates all Chocolatey Packages"
+        $action = New-ScheduledTaskAction -Execute 'Powershell.exe' `
+        -Argument '-NoProfile -WindowStyle Hidden -command "choco upgrade all --accept-license --confirm --reduce-package-size *> C:\temp\update_choco_all.log"'
+        $trigger =  New-ScheduledTaskTrigger -At 1am -Weekly -DaysOfWeek Saturday
+        $settings = New-ScheduledTaskSettingsSet -ExecutionTimeLimit (New-TimeSpan -Minutes 2) -RestartCount 3 -RestartInterval (New-TimeSpan -Minutes 1)
+        Register-ScheduledTask -Action $action -Trigger $trigger -TaskName $taskname -Description $taskdescription -Settings $settings -User "System" -RunLevel Highest
+    }
+}
+
 function InstallChoco() {
     Invoke-WebRequest https://chocolatey.org/install.ps1 -UseBasicParsing | Invoke-Expression
 }
@@ -39,10 +52,12 @@ function ExecChoco($cmd) {
 }
 
 Setup
+SetupChocoUpdateTask
 ExecChoco -cmd "--version"
 ExecChoco -cmd "feature enable -n=allowGlobalConfirmation"
 ExecChoco -cmd "upgrade chocolatey"
 ExecChoco -cmd "install packages.config --accept-license --confirm --reduce-package-size"
+ExecChoco -cmd "upgrade all --accept-license --confirm --reduce-package-size"
 ExecChoco -cmd "feature disable -n=allowGlobalConfirmation"
 
 if($restart) {
